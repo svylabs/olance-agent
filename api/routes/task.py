@@ -41,36 +41,36 @@ def get_task_detail(task_id):
 		return jsonify({'error': 'Task not found'}), 404
 
 	# Fetch TaskRuns for this task
-	query = datastore_client.query(kind='TaskRun')
-	query.add_filter('task_id', '=', str(task_id))
-	task_runs = list(query.fetch())
-	runs = []
-	for run in task_runs:
-		# Fetch TaskLogs for this run
-		log_query = datastore_client.query(kind='TaskLog')
-		log_query.add_filter('task_run_id', '=', run.key.name)
-		logs = list(log_query.fetch())
-		log_objs = [
-			TaskLog(
-				log_id=log.key.name,
-				task_run_id=run.key.name,
-				step=log.get('step', ''),
-				status=log.get('status', ''),
-				started=log.get('started', ''),
-				finished=log.get('finished', ''),
-				output=log.get('output', ''),
-				created=log.get('created', '')
-			) for log in logs
-		]
-		run_obj = TaskRun(
-			run_id=run.key.name,
-			task_id=task_id,
-			status=run.get('status', ''),
-			started_at=run.get('started_at', ''),
-			finished_at=run.get('finished_at', ''),
-			logs=log_objs
-		)
-		runs.append(run_obj)
+	# query = datastore_client.query(kind='TaskRun')
+	# query.add_filter('task_id', '=', str(task_id))
+	# task_runs = list(query.fetch())
+	# runs = []
+	# for run in task_runs:
+	# 	# Fetch TaskLogs for this run
+	# 	log_query = datastore_client.query(kind='TaskLog')
+	# 	log_query.add_filter('task_run_id', '=', run.key.name)
+	# 	logs = list(log_query.fetch())
+	# 	log_objs = [
+	# 		TaskLog(
+	# 			log_id=log.key.name,
+	# 			task_run_id=run.key.name,
+	# 			step=log.get('step', ''),
+	# 			status=log.get('status', ''),
+	# 			started=log.get('started', ''),
+	# 			finished=log.get('finished', ''),
+	# 			output=log.get('output', ''),
+	# 			created=log.get('created', '')
+	# 		) for log in logs
+	# 	]
+	# 	run_obj = TaskRun(
+	# 		run_id=run.key.name,
+	# 		task_id=task_id,
+	# 		status=run.get('status', ''),
+	# 		started_at=run.get('started_at', ''),
+	# 		finished_at=run.get('finished_at', ''),
+	# 		logs=log_objs
+	# 	)
+	# 	runs.append(run_obj)
 
 	task_obj = Task(
 		task_id=task_entity['task_id'],
@@ -81,11 +81,11 @@ def get_task_detail(task_id):
 	)
 	# Serialize dataclasses to dicts for JSON response
 	return jsonify({
-		**task_obj.__dict__,
-		'runs': [
-			{
-				**run.__dict__,
-				'logs': [log.__dict__ for log in run.logs]
-			} for run in runs
-		]
+		**task_obj.__dict__
+		# 'runs': [
+		# 	{
+		# 		**run.__dict__,
+		# 		'logs': [log.__dict__ for log in run.logs]
+		# 	} for run in runs
+		# ]
 	})

@@ -1,13 +1,13 @@
 from dataclasses import dataclass, field
 from typing import Optional, List
-from datetime import datetime
+from datetime import datetime, timezone
 
 @dataclass
 class Task:
     task_id: str
     description: str
     url: Optional[str] = ''
-    created_at: str = field(default_factory=lambda: datetime.now(datetime.timezone.utc).isoformat())
+    created_at: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
     status: str = 'pending'
 
 @dataclass

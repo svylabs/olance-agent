@@ -1,5 +1,7 @@
 # from flask import Flask
 # Import the blueprint
+from dotenv import load_dotenv
+load_dotenv()
 from flask import Flask
 from api.routes import api_bp
 
