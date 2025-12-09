@@ -7,6 +7,7 @@ class Task:
     task_id: str
     description: str
     url: Optional[str] = ''
+    repo_url: Optional[str] = ''
     created_at: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
     status: str = 'pending'
 

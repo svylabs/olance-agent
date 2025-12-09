@@ -1,3 +1,4 @@
+google-cloud-tasks
 python-dotenv
 flask
 google-cloud-datastore
