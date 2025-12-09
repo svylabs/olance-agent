@@ -55,7 +55,9 @@ def register_task():
 	}
 
 	# Create the Cloud Task
-	task_handler_url = os.getenv('TASK_HANDLER_URL', 'http://localhost:3000/api/task/handler/handle')
+	task_handler_url = os.getenv('TASK_HANDLER_URL')
+	if not task_handler_url:
+		return jsonify({'error': 'TASK_HANDLER_URL environment variable is not set'}), 500
 	task = {
 		'http_request': {
 			'http_method': 1,  # tasks_v2.HttpMethod.POST
